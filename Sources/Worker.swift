@@ -22,7 +22,26 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-public protocol Job {
-    var name: String { get }
-    func execute () throws
+public protocol Worker {
+    func perform(job: Job) throws
+}
+
+public protocol Queuing {
+    associatedtype Item
+    mutating func enqueue(item: Item)
+    mutating func dequeue() throws -> Item
+}
+
+enum QueuingError: ErrorProtocol {
+    case QueueEmpty
+}
+
+public protocol Scheduling {
+    associatedtype Event
+    func schedule(event: Event)
+}
+
+public protocol Handling {
+    associatedtype Event
+    func handle(event: Event)
 }
