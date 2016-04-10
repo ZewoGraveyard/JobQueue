@@ -12,7 +12,7 @@ JobQueue
 
 In this case it's a basic worker that executes the job on the thread the worker was called from.
 
-```
+```swift
 public class BasicWorker : Worker {
     public func perform(job: Job) throws {
         try job.execute()
@@ -22,7 +22,7 @@ public class BasicWorker : Worker {
 
 ####Define your Job(s)
 
-```
+```swift
 public class ExampleJob : Job {
     public func execute() throws {
         print("Hello Zewo")
@@ -32,7 +32,7 @@ public class ExampleJob : Job {
 
 #### Setup your workers and your queue
 
-```
+```swift
 var workers = [BasicWorker]()
 workers.append(BasicWorker())
 
@@ -48,7 +48,7 @@ for _ in 0...10 {
 
 #### Put your workers to work on their varied jobs.
 
-````
+````swift
 do {
     while true {
         let job = try jobQueue.dequeue()
