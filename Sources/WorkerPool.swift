@@ -49,7 +49,7 @@ class WorkerPool<Type: Worker where Type: AnyObject> : Pool {
         }
     }
     
-    func with(handler: (poolable: Type) throws -> Any?) throws -> Any? {
+    func with<ResultType>(handler: (poolable: Type) throws -> ResultType?) throws -> ResultType? {
         guard let worker = inactive.first else {
             return nil
         }
