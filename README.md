@@ -29,11 +29,12 @@ workers.append(BasicWorker())
 let pool = WorkerPool<BasicWorker>(with: workers)
 
 
-var jobQueue = JobQueue<Job>()
+var jobQueue = [Job]()
 
 for _ in 0...10 {
     jobQueue.enqueue(ExampleJob())
 }
+
 
 do {
     while true {
