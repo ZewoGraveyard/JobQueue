@@ -35,13 +35,12 @@ for _ in 0...10 {
     jobQueue.enqueue(ExampleJob())
 }
 
-
 do {
     while true {
         let job = try jobQueue.dequeue()
         
-        try pool.with { (poolable) -> Any? in
-            try poolable.perform(job)
+        try pool.with { (worker) in
+            try worker.perform(job)
         }
     }
 }
