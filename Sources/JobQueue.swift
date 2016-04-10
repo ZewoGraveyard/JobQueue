@@ -22,25 +22,18 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-public struct JobQueue<T> : Queuing {
-    
-    var jobs = [T]()
-    
-    init () {
-        
+extension Array: Queuing {
+    public typealias QueuedType = Element
+    public mutating func enqueue(item: QueuedType) {
+        self.append(item)
     }
-    
-    public mutating func enqueue(item: T) {
-        jobs.append(item)
-    }
-    public mutating func dequeue() throws -> T {
-        guard let job = jobs.first else {
+    public mutating func dequeue() throws -> QueuedType {
+        guard let job = self.first else {
             throw QueuingError.QueueEmpty
         }
-        jobs.removeFirst()
+        self.removeFirst()
         return job
     }
-    
 }
 
 enum JobQueueError: ErrorProtocol {

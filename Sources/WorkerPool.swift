@@ -41,7 +41,7 @@ class WorkerPool<Type: Worker where Type: AnyObject> : Pool {
     }
     
     func takeBack(poolable: Type) {
-        for index in 0...borrowed.count-1 {
+        for index in 0 ..< borrowed.count {
             if ObjectIdentifier(active[index]) == ObjectIdentifier(poolable) {
                 borrowed.remove(at: index)
                 inactive.append(poolable)
@@ -57,8 +57,8 @@ class WorkerPool<Type: Worker where Type: AnyObject> : Pool {
         
         let result = try handler(poolable: worker)
         
-        for index in 0...active.count-1 {
-            if ObjectIdentifier(active[index]) == ObjectIdentifier(worker) {
+        for index in 0 ..< active.count {
+            if active[index] === worker {
                 active.remove(at: index)
                 inactive.append(worker)
             }
