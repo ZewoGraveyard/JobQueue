@@ -8,6 +8,9 @@ JobQueue
 
 ##Usage
 
+####Define your worker
+
+In this case it's a basic worker that executes the job on the thread the worker was called from.
 
 ```
 public class BasicWorker : Worker {
@@ -15,14 +18,21 @@ public class BasicWorker : Worker {
         try job.execute()
     }
 }
+```
 
+####Define your Job(s)
+
+```
 public class ExampleJob : Job {
     public func execute() throws {
         print("Hello Zewo")
     }
 }
+```
 
+#### Setup your workers and your queue
 
+```
 var workers = [BasicWorker]()
 workers.append(BasicWorker())
 
@@ -34,8 +44,11 @@ var jobQueue = [Job]()
 for _ in 0...10 {
     jobQueue.enqueue(ExampleJob())
 }
+```
 
+#### Put your workers to work on their varied jobs.
 
+````
 do {
     while true {
         let job = try jobQueue.dequeue()
